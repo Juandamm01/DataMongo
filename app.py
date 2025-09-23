@@ -34,15 +34,6 @@ def grafico():
     conteo = df['PAIS'].value_counts()
 
 
-    #Grafico
-    plt.figure(figsize=(10, 6))
-    #df_grouped.plot(kind='bar', color='mediumseagreen')
-    plt.title('Cantidad de aspirantes por país')
-    plt.xlabel('País')
-    plt.ylabel('Cantidad')
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-
     # Crear gráfico
     plt.figure(figsize=(10, 6))
     conteo.plot(kind='bar', color='mediumseagreen')
@@ -59,6 +50,44 @@ def grafico():
     plt.close()
 
     return send_file(img, mimetype='image/png')
+
+@app.route('/grafico2')
+def grafico2():
+    # Obtener los datos desde MongoDB
+    datos = list(collection.find())
+    if not datos:
+        return "No hay datos en la colección", 400
+
+    df = pd.DataFrame(datos)
+
+    # Verificar que el campo GENERO exista
+    if 'GENERO' not in df.columns:
+        return "No se puede generar el gráfico: campo 'GENERO' no encontrado", 400
+
+    # Contar la cantidad de admitidos según GENERO
+    diagram = df['NATURALEZA_COLEGIO'].value_counts()
+
+    # Crear gráfico de pastel
+    plt.figure(figsize=(8, 8))
+    diagram.plot(
+        kind='pie',
+        autopct='%1.1f%%',  # Muestra porcentaje
+        startangle=90,  # Rotación inicial
+        colors=['mediumseagreen', 'lightcoral'],  # Puedes personalizar colores
+        explode=[0.05] * len(diagram)  # Separa ligeramente las porciones
+    )
+    plt.title('Distribución de aspirantes según Naturaleza de Colegio')
+    plt.ylabel('')  # Ocultar etiqueta del eje Y
+    plt.tight_layout()
+
+    # Guardar imagen en memoria
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plt.close()
+
+    return send_file(img, mimetype='image/png')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
