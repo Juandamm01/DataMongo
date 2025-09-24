@@ -60,9 +60,9 @@ def grafico2():
 
     df = pd.DataFrame(datos)
 
-    # Verificar que el campo GENERO exista
-    if 'GENERO' not in df.columns:
-        return "No se puede generar el gráfico: campo 'GENERO' no encontrado", 400
+    # Verificar que el campo NATURALEZA_COLEGIO exista
+    if 'NATURALEZA_COLEGIO' not in df.columns:
+        return "No se puede generar el gráfico: campo 'NATURALEZA_COLEGIO' no encontrado", 400
 
     # Contar la cantidad de admitidos según GENERO
     diagram = df['NATURALEZA_COLEGIO'].value_counts()
