@@ -89,5 +89,39 @@ def grafico2():
     return send_file(img, mimetype='image/png')
 
 
+@app.route('/grafico3')
+def grafico3():
+
+    # Obtener datos desde MongoDB
+    datos = list(collection.find())
+    if not datos:
+        return "No hay cantidad de aspirantes por facultad", 400
+
+    df = pd.DataFrame(datos)
+
+    # Verificar que el campo de facutlad exista
+    if 'FACULTAD' not in df.columns:
+        return "No se puede generar el gráfico", 400
+
+    # Agrupar por facultad
+    conteo = df['FACULTAD'].value_counts()
+
+    # Crear gráfico
+    plt.figure(figsize=(10, 6))
+    conteo.plot(kind='bar', color='mediumseagreen')
+    plt.title('Cantidad de aspirantes por Facultad')
+    plt.xlabel('Facultad')
+    plt.ylabel('Cantidad de aspirantes')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+
+    # Guardar imagen en memoria
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plt.close()
+
+    return send_file(img, mimetype='image/png')
+
 if __name__ == "__main__":
     app.run(debug=True)
