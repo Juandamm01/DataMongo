@@ -123,5 +123,38 @@ def grafico3():
 
     return send_file(img, mimetype='image/png')
 
+@app.route('/grafico4')
+def grafico4():
+
+    # Obtener datos desde MongoDB
+    datos = list(collection.find())
+    if not datos:
+        return "No hay datos de aspirantes", 400
+
+    df = pd.DataFrame(datos)
+
+    # Verificar que el campo exista
+    if 'MUNICIPIO_COLEGIO' not in df.columns:
+        return "No se puede generar el gráfico", 400
+
+    # Agrupar por municipio
+    conteo = df['MUNICIPIO_COLEGIO'].value_counts().head(20)
+
+    # Crear gráfico
+    plt.figure(figsize=(12, 8))
+    conteo.plot(kind='bar', color='cornflowerblue')
+    plt.title('Top 20 Municipios con más aspirantes')
+    plt.xlabel('Municipio')
+    plt.ylabel('Cantidad de aspirantes')
+    plt.xticks(rotation=90)
+    plt.tight_layout()
+
+    # Guardar imagen en memoria
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plt.close()
+
+    return send_file(img, mimetype='image/png')
 if __name__ == "__main__":
     app.run(debug=True)
