@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Gráfico de datos</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica,
+      Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
+      background-color: #dcdcdc;
+    }
+
+    header{
+        width: 100vw;
+        height: 50px;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid;
+        h1{
+            margin: 0;
+        }
+    }
+
+    div {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: #000000;
+      background-color: #ffffff;
+      border: none;
+      width: 400px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+        text-align: center;
+      border-radius: 20px;
+      font-size: 22px;
+      font-weight: bold;
+      transition: all 200ms ease-in-out;
+    }
+
+    a:hover {
+      background-color: #a8a8a8;
+    }
+  </style>
+</head>
+<body>
+    <header>
+        <h1>Graficos de estudiantes admitidos en la unillanos desde el 2021 hasta el segundo semestre del 2025</h1>
+    </header>
+    <div>
+    <a href="/grafico">Cantidad de aspirantes por país</a>
+    <a href="/grafico2">Distribución de aspirantes según naturaleza de colegio</a>
+    <a href="/grafico3">Cantidad de aspirantes por facultad</a>
+    </div>
+</body>
+</html>
